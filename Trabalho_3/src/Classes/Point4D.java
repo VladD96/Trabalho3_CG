@@ -1,4 +1,5 @@
 package Classes;
+
 public final class Point4D {
 	private double x;
 	private double y;

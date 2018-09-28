@@ -66,19 +66,20 @@ public final class BoundingBox {
 	public void desenharOpenGLBBox(GL gl) {
 		gl.glColor3f(1.0f, 0.0f, 0.0f);
 
-/**		gl.glBegin (GL.GL_LINE_LOOP);
+		gl.glBegin (GL.GL_LINE_LOOP);
 			gl.glVertex3d (menorX, maiorY, menorZ);
 			gl.glVertex3d (maiorX, maiorY, menorZ);
 			gl.glVertex3d (maiorX, menorY, menorZ);
 			gl.glVertex3d (menorX, menorY, menorZ);
-	    gl.glEnd();*/
+	    gl.glEnd();
 	    
-/**	    gl.glBegin(GL.GL_LINE_LOOP);
+	    gl.glBegin(GL.GL_LINE_LOOP);
 	    	gl.glVertex3d (menorX, menorY, menorZ);
 	    	gl.glVertex3d (menorX, menorY, maiorZ);
 	    	gl.glVertex3d (menorX, maiorY, maiorZ);
 	    	gl.glVertex3d (menorX, maiorY, menorZ);
-	    gl.glEnd();*/
+	    gl.glEnd();
+	    
 	    gl.glBegin(GL.GL_LINE_LOOP);
 	    	gl.glVertex3d (maiorX, maiorY, maiorZ);
 	    	gl.glVertex3d (menorX, maiorY, maiorZ);
