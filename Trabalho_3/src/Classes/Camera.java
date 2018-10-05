@@ -10,4 +10,9 @@ public class Camera {
 	{
 		
 	}
+	
+	public void Pan()
+	{
+		
+	}
 }
