@@ -22,13 +22,13 @@ import Classes.Mundo;
 import Classes.ObjGrafico;
 import Classes.Point4D;
 
-public class Main implements  GLEventListener, KeyListener, MouseListener, MouseMotionListener {
+public class Main implements GLEventListener, KeyListener, MouseListener, MouseMotionListener {
 	private GL gl;
 	private GLU glu;
 	private GLAutoDrawable glDrawable;
 	private Mundo mundo = new Mundo();
 	private boolean inicioPol = true;
-	
+
 	public void init(GLAutoDrawable drawable) {
 		System.out.println(" --- init ---");
 		glDrawable = drawable;
@@ -36,9 +36,9 @@ public class Main implements  GLEventListener, KeyListener, MouseListener, Mouse
 		glu = new GLU();
 		glDrawable.setGL(new DebugGL(gl));
 		System.out.println("Espaco de desenho com tamanho: " + drawable.getWidth() + " x " + drawable.getHeight());
-		this.clearColor();		
+		this.clearColor();
 	}
-	
+
 	public void clearColor() {
 		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	}
@@ -53,15 +53,9 @@ public class Main implements  GLEventListener, KeyListener, MouseListener, Mouse
 		SRU();
 
 		// seu desenho ...
-		gl.glColor3f(0.0f, 0.0f, 1.0f);
-		gl.glLineWidth(5.0f);
-		gl.glPointSize(1.0f);
-		gl.glBegin(GL.GL_POINTS);
-			for (int i = 0; i <= 360; i += 5)
-			{
-				gl.glVertex2d(RetornaX(i, 100), RetornaY(i, 100));
-			}
-		gl.glEnd();
+		for (ObjGrafico obj : this.mundo.lisObjGrafico) {
+
+		}
 
 		gl.glFlush();
 	}
@@ -80,59 +74,37 @@ public class Main implements  GLEventListener, KeyListener, MouseListener, Mouse
 		gl.glColor3f(1.0f, 0.0f, 0.0f);
 		gl.glLineWidth(1.0f);
 		gl.glBegin(GL.GL_LINES);
-			gl.glVertex2f(-200.0f, 0.0f);
-			gl.glVertex2f(200.0f, 0.0f);
+		gl.glVertex2f(-200.0f, 0.0f);
+		gl.glVertex2f(200.0f, 0.0f);
 		gl.glEnd();
 
 		// eixo y
 		gl.glColor3f(0.0f, 1.0f, 0.0f);
 		gl.glBegin(GL.GL_LINES);
-			gl.glVertex2f(0.0f, -200.0f);
-			gl.glVertex2f(0.0f, 200.0f);
+		gl.glVertex2f(0.0f, -200.0f);
+		gl.glVertex2f(0.0f, 200.0f);
 		gl.glEnd();
 	}
-	
+
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_I:
-			
-			glDrawable.display();
-			break;
-		case KeyEvent.VK_O:
-			
-			glDrawable.display();
-			break;
-		case KeyEvent.VK_E:
-			
-			glDrawable.display();
-			break;
-		case KeyEvent.VK_D:
-			
-			glDrawable.display();
-			break;
-		case KeyEvent.VK_C:
-			
-			glDrawable.display();
-			break;
-		case KeyEvent.VK_B:
-			
-			glDrawable.display();
+		case KeyEvent.VK_ENTER:
+			inicioPol = true;
 			break;
 		}
 	}
 
 	public void mousePressed(MouseEvent arg0) {
-		if (inicioPol)
-		{
-			ObjGrafico obj = new ObjGrafico();
-			this.mundo.lisObjGrafico.add(obj);
+		if (inicioPol) {
+			this.mundo.lisObjGrafico.add(new ObjGrafico(this.gl));
+			this.mundo.poligonoSelecionado = this.mundo.lisObjGrafico.getLast();
 			inicioPol = false;
-			obj.vertices.add(new Point4D(arg0.getX(), arg0.getY(), 0.0, 1.0));
 		}
-		
+		this.mundo.poligonoSelecionado.vertices.add(new Point4D(arg0.getX(), arg0.getY(), 0.0, 1.0));
+
+		glDrawable.display();
 	}
 
-	
 	public double RetornaX(double angulo, double raio) {
 		return (raio * Math.cos(Math.PI * angulo / 180.0));
 	}
@@ -142,39 +114,39 @@ public class Main implements  GLEventListener, KeyListener, MouseListener, Mouse
 	}
 
 	public void displayChanged(GLAutoDrawable arg0, boolean arg1, boolean arg2) {
-		// TODO Auto-generated method stub 		
+		// TODO Auto-generated method stub
 	}
 
 	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 }

@@ -6,12 +6,20 @@ import javax.media.opengl.GL;
 public class ObjGrafico {
 	public GL gl;
 	public LinkedList<Point4D> vertices;
-	public int primitva = GL.GL_LINE_LOOP;
-	public double tamanho = 2.0f;
-	public int[] cor = new int[3];
+	public int primitiva;
+	public double tamanho;
+	public float[] cor;
 
-	public ObjGrafico() {
-		
+	public ObjGrafico(GL gl) {
+		this.gl = gl;
+		this.vertices = new LinkedList<Point4D>();
+		this.primitiva = GL.GL_LINE_LOOP;
+		this.tamanho = 2.0f;
+
+		this.cor = new float[3];
+		this.cor[0] = 1.0f;
+		this.cor[1] = 0.0f;
+		this.cor[2] = 0.0f;
 	}
 
 	public void atribuirGL(GL gl) {
@@ -23,10 +31,16 @@ public class ObjGrafico {
 	}
 
 	public int obterPrimitiva() {
-		return this.primitva;
+		return this.primitiva;
 	}
 
-	public void desenha() {
-
+	public void desenha() {		
+		gl.glColor3f(this.cor[0], this.cor[1], this.cor[2]);
+		gl.glLineWidth(3.0f);
+		gl.glBegin(this.primitiva);
+			for (Point4D ponto : this.vertices) {
+				gl.glVertex2d(ponto.GetX(), ponto.GetY());
+			}
+		gl.glEnd();
 	}
 }
