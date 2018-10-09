@@ -11,6 +11,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.NoSuchElementException;
 
 import javax.media.opengl.DebugGL;
 import javax.media.opengl.GL;
@@ -50,11 +51,11 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 		gl.glLoadIdentity();
 		glu.gluOrtho2D(0.0f, 400.0f, 400.0f, 0.0f);
 
-		SRU();
+		// SRU();
 
 		// seu desenho ...
 		for (ObjGrafico obj : this.mundo.lisObjGrafico) {
-
+			obj.desenha();
 		}
 
 		gl.glFlush();
@@ -91,6 +92,20 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 		case KeyEvent.VK_ENTER:
 			inicioPol = true;
 			break;
+
+		case KeyEvent.VK_DELETE:
+			if (this.mundo.poligonoSelecionado != null
+					&& this.mundo.lisObjGrafico.remove(this.mundo.poligonoSelecionado)) {
+				try {
+					this.mundo.poligonoSelecionado = this.mundo.lisObjGrafico.getLast();
+				} catch(NoSuchElementException el) {
+					this.mundo.poligonoSelecionado = null;
+				}
+				inicioPol = true;
+				glDrawable.display();
+			}
+
+			break;
 		}
 	}
 
@@ -105,20 +120,19 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 		glDrawable.display();
 	}
 
-	public double RetornaX(double angulo, double raio) {
-		return (raio * Math.cos(Math.PI * angulo / 180.0));
-	}
-
-	public double RetornaY(double angulo, double raio) {
-		return (raio * Math.sin(Math.PI * angulo / 180.0));
-	}
-
 	public void displayChanged(GLAutoDrawable arg0, boolean arg1, boolean arg2) {
 		// TODO Auto-generated method stub
 	}
 
 	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		if (this.mundo.poligonoSelecionado != null) {
+			for (Point4D ponto : this.mundo.poligonoSelecionado.vertices) {
+//				ponto.SetX(valorX);
+//				ponto.SetY(valorY);
+			}
+
+			glDrawable.display();
+		}
 	}
 
 	public void mouseMoved(MouseEvent e) {

@@ -1,11 +1,14 @@
 package Classes;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.media.opengl.GL;
 
 public class ObjGrafico {
 	public GL gl;
 	public LinkedList<Point4D> vertices;
+	public ArrayList<ObjGrafico> objGraficos;
+	public Transform4d tranformacao;
 	public int primitiva;
 	public double tamanho;
 	public float[] cor;
@@ -13,6 +16,8 @@ public class ObjGrafico {
 	public ObjGrafico(GL gl) {
 		this.gl = gl;
 		this.vertices = new LinkedList<Point4D>();
+		this.objGraficos = new ArrayList<ObjGrafico>();
+		this.tranformacao = new Transform4d();
 		this.primitiva = GL.GL_LINE_LOOP;
 		this.tamanho = 2.0f;
 
