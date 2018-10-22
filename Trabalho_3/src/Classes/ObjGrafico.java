@@ -42,9 +42,11 @@ public class ObjGrafico {
 	public void desenha() {		
 		gl.glColor3f(this.cor[0], this.cor[1], this.cor[2]);
 		gl.glLineWidth(3.0f);
+		gl.glPointSize(3.0f);
+		
 		gl.glBegin(this.primitiva);
-			for (Point4D ponto : this.vertices) {
-				gl.glVertex2d(ponto.GetX(), ponto.GetY());
+			for (Point4D vertice : this.vertices) {
+				gl.glVertex2d(vertice.GetX(), vertice.GetY());
 			}
 		gl.glEnd();
 	}
