@@ -49,4 +49,10 @@ public final class Point4D {
 		this.w = w;
 	}
 	
+	public Point4D inverterSinal(Point4D pto) {
+		pto.SetX(pto.GetX()*-1);
+		pto.SetY(pto.GetY()*-1);
+		pto.SetZ(pto.GetZ()*-1);
+		return pto;
+	}	
 }
