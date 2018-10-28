@@ -34,7 +34,8 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 	private int antigoX, antigoY = 0;
 	private float d = 0;
 	private ObjGrafico poligonoRasto = null;
-
+	private int polignoPrimitiva = 0;
+		
 	public void init(GLAutoDrawable drawable) {
 		System.out.println(" --- init ---");
 		glDrawable = drawable;
@@ -99,6 +100,21 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 		case KeyEvent.VK_1:
 			this.criaVert = true;
 			break;
+			
+		case KeyEvent.VK_2:
+			this.mundo.lisObjGrafico.add(new ObjGrafico(this.gl));
+			this.mundo.poligonoSelecionado = this.mundo.lisObjGrafico.getLast();
+			this.mundo.poligonoSelecionado.primitiva = GL.GL_LINE_LOOP;
+			this.inicioPol = false;
+			break;
+			
+		case KeyEvent.VK_3:
+			this.mundo.lisObjGrafico.add(new ObjGrafico(this.gl));
+			this.mundo.poligonoSelecionado = this.mundo.lisObjGrafico.getLast();
+			this.mundo.poligonoSelecionado.primitiva = GL.GL_LINE_STRIP;
+			this.inicioPol = false;
+			break;
+			
 		case KeyEvent.VK_ENTER:
 			this.inicioPol = true;
 			break;
@@ -159,8 +175,8 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 				// Poligno "rasto"
 				this.poligonoRasto.vertices.add(new Point4D(this.antigoX, this.antigoY, 0.0f, 1.0f));
 				this.poligonoRasto.vertices.add(new Point4D(arg0.getX(), arg0.getY(), 0.0, 1.0));
-				this.poligonoRasto.cor[1] = 1.0f;
 				this.poligonoRasto.primitiva = GL.GL_LINE_STRIP;
+				this.poligonoRasto.cor[1] = 1.0f; // Teste
 				
 				this.antigoX = arg0.getX();
 				this.antigoY = arg0.getY();
@@ -185,7 +201,7 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 			this.mundo.poligonoSelecionado.vertices.add(new Point4D(arg0.getX(), arg0.getY(), 0.0, 1.0));
 			glDrawable.display();
 		}
-
+		
 		if (this.d <= 20000) {
 			this.antigoX = arg0.getX();
 			this.antigoY = arg0.getY();
