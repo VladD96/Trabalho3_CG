@@ -34,7 +34,6 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 	private int antigoX, antigoY = 0;
 	private float d = 0;
 	private ObjGrafico poligonoRasto = null;
-	private int polignoPrimitiva = 0;
 		
 	public void init(GLAutoDrawable drawable) {
 		System.out.println(" --- init ---");
@@ -140,6 +139,19 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 	}
 
 	public void mousePressed(MouseEvent arg0) {
+		// Poligno rasto
+		if(this.poligonoRasto == null) {
+			this.poligonoRasto = new ObjGrafico(this.gl);
+			this.mundo.lisObjGrafico.add(this.poligonoRasto);
+			this.poligonoRasto.vertices.add(new Point4D(arg0.getX(), arg0.getY(), 0.0, 1.0));
+			this.poligonoRasto.vertices.add(new Point4D(arg0.getX(), arg0.getY(), 0.0, 1.0));
+			this.poligonoRasto.primitiva = GL.GL_LINE_STRIP;
+			this.poligonoRasto.cor[2] = 1.0f; // Teste
+		} else {
+			Point4D ponto = this.poligonoRasto.vertices.getFirst();
+			ponto.SetX(arg0.getX());
+			ponto.SetY(arg0.getY());
+		}
 	}
 
 	public void displayChanged(GLAutoDrawable arg0, boolean arg1, boolean arg2) {
@@ -173,10 +185,12 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 				pontoSelecionado.SetY(pontoSelecionado.GetY() + movtoY);
 
 				// Poligno "rasto"
-				this.poligonoRasto.vertices.add(new Point4D(this.antigoX, this.antigoY, 0.0f, 1.0f));
-				this.poligonoRasto.vertices.add(new Point4D(arg0.getX(), arg0.getY(), 0.0, 1.0));
-				this.poligonoRasto.primitiva = GL.GL_LINE_STRIP;
-				this.poligonoRasto.cor[1] = 1.0f; // Teste
+				if (this.poligonoRasto != null) {
+					Point4D pontoRasto = this.poligonoRasto.vertices.getLast();
+					pontoRasto.SetX(arg0.getX());
+					pontoRasto.SetY(arg0.getY());
+					this.poligonoRasto.desenha();
+				}
 				
 				this.antigoX = arg0.getX();
 				this.antigoY = arg0.getY();
