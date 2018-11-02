@@ -34,7 +34,7 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 	private int antigoX, antigoY = 0;
 	private float d = 0;
 	private ObjGrafico poligonoRasto = null;
-		
+
 	public void init(GLAutoDrawable drawable) {
 		System.out.println(" --- init ---");
 		glDrawable = drawable;
@@ -95,25 +95,27 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 	}
 
 	public void keyPressed(KeyEvent e) {
+		boolean modificouObjGraficos = false;
+
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_1:
 			this.criaVert = true;
 			break;
-			
+
 		case KeyEvent.VK_2:
 			this.mundo.lisObjGrafico.add(new ObjGrafico(this.gl));
 			this.mundo.poligonoSelecionado = this.mundo.lisObjGrafico.getLast();
 			this.mundo.poligonoSelecionado.primitiva = GL.GL_LINE_LOOP;
 			this.inicioPol = false;
 			break;
-			
+
 		case KeyEvent.VK_3:
 			this.mundo.lisObjGrafico.add(new ObjGrafico(this.gl));
 			this.mundo.poligonoSelecionado = this.mundo.lisObjGrafico.getLast();
 			this.mundo.poligonoSelecionado.primitiva = GL.GL_LINE_STRIP;
 			this.inicioPol = false;
 			break;
-			
+
 		case KeyEvent.VK_ENTER:
 			this.inicioPol = true;
 			break;
@@ -131,16 +133,40 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 				glDrawable.display();
 			}
 			break;
+		case KeyEvent.VK_R:
+			for (ObjGrafico obj : this.mundo.lisObjGrafico) {
+				obj.cor[0]++;
+			}
+			modificouObjGraficos = true;
 
+			break;
+		case KeyEvent.VK_G:
+			for (ObjGrafico obj : this.mundo.lisObjGrafico) {
+				obj.cor[1]++;
+			}
+			modificouObjGraficos = true;
+
+			break;
+		case KeyEvent.VK_B:
+			for (ObjGrafico obj : this.mundo.lisObjGrafico) {
+				obj.cor[2]++;
+			}
+			modificouObjGraficos = true;
+
+			break;
 		case KeyEvent.VK_ESCAPE:
 			this.criaVert = false;
 			break;
+		}
+
+		if (modificouObjGraficos) {
+			glDrawable.display();
 		}
 	}
 
 	public void mousePressed(MouseEvent arg0) {
 		// Poligno rasto
-		if(this.poligonoRasto == null) {
+		if (this.poligonoRasto == null) {
 			this.poligonoRasto = new ObjGrafico(this.gl);
 			this.mundo.lisObjGrafico.add(this.poligonoRasto);
 			this.poligonoRasto.vertices.add(new Point4D(arg0.getX(), arg0.getY(), 0.0, 1.0));
@@ -191,7 +217,7 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 					pontoRasto.SetY(arg0.getY());
 					this.poligonoRasto.desenha();
 				}
-				
+
 				this.antigoX = arg0.getX();
 				this.antigoY = arg0.getY();
 
@@ -215,7 +241,7 @@ public class Main implements GLEventListener, KeyListener, MouseListener, MouseM
 			this.mundo.poligonoSelecionado.vertices.add(new Point4D(arg0.getX(), arg0.getY(), 0.0, 1.0));
 			glDrawable.display();
 		}
-		
+
 		if (this.d <= 20000) {
 			this.antigoX = arg0.getX();
 			this.antigoY = arg0.getY();

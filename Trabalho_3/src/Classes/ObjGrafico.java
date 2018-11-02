@@ -56,7 +56,7 @@ public class ObjGrafico {
 	public int obterPrimitiva() {
 		return this.primitiva;
 	}
-
+	
 	public void translacaoXYZ(double tx, double ty, double tz) {
 		Transform4d matrizTranslate = new Transform4d();
 		matrizTranslate.atribuirTranslacao(tx,ty,tz);
